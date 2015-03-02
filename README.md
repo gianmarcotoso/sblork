@@ -1,8 +1,10 @@
 #Sblork
 A simple MVC abstraction of [Backbone.js](http://backbonejs.org) with a silly name (because Javascript libraries have silly names!)
 
+*Please note: this library is in a very, very, **very** early stage of development. I'm not sure about many things, stuff will change and there's probably something broken here and there. Please don't hate me! :)*
+
 ##Building
-The repository already includes a built version of sblork, but if you modify it you can build it like this:
+The repository already includes a built version of Sblork, but if you modify it you can build it like this:
 
 	npm install
 	grunt
@@ -47,7 +49,7 @@ Defining a module is a fancy way to say that you can save something within your 
 
 		// An instance method
 		MyModule.prototype.awesome = function() {
-			alert(name + ' is awesome!');
+			alert(this.name + ' is awesome!');
 		}
 
 		// The definition
@@ -72,12 +74,14 @@ Later, for example in your bootstrap function, you could use that module this wa
 		});
 	})(this.Sblork, this.jQuery, this.Backbone);
 
-Modules are used to represent controllers, views, the router, the event manager and whatever else you want to. There is no restriction, it can be anything.
+Modules are used to represent controllers, views, the router, the event manager and whatever else you want to. There is no restriction, they can be used for anything!
 
 ###The Event Manager
 Every Sblork app instance has a predefined module called `EventManager`. This is an object extending `Backbone.Event`, with no added functionality whatsoever. You can retrieve it anywhere by using
 
 	var eventManager = Sblork.getInstance('myapp').require('EventManager');
+	
+You can then send events through it or listen to events coming from it at your leisure.
 	
 ###Views
 A view can be defined as a module within the Sblork app's namespace. If you use Backbone's `View`, this could be how you define it:
@@ -115,7 +119,7 @@ Let's say you have a structure like this one:
 		</body>
 	</html>
 	
-Here, the `div` with the role `navigation` is used as a container for the nav bar while the one with the role `content` is used to show the current page's content. You can register the two `div`s as containers within Sblork by calling the registerViewContainer method and passing it a name for the container and the `data-container-role` value for the element you want to use as the container itself:
+Here, the `div` with the role `navigation` is used as a container for the nav bar while the one with the role `content` is used to show the current page's content. You can register the two `div`s as containers within Sblork by calling the `registerViewContainer` method and passing it a name for the container and the `data-container-role` value for the element you want to use as the container itself:
 
 	;(function(Sblork, $, Backbone) {
 		// This function is called by Sblork binded to the app's instance
@@ -131,7 +135,7 @@ Here, the `div` with the role `navigation` is used as a container for the nav ba
 		});
 	})(this.Sblork, this.jQuery, this.Backbone);
 	
-After a view container is registered, you can use its `makeView` function to generete a the DOM element that will be used to render your view (and that will get deleted from the DOM on cleanup, while the container will live on):
+After a view container is registered, you can use its `makeView` function to generete the DOM element that will be used to render your view (and that will get deleted from the DOM on cleanup, while the container will live on):
 
 	...
 		// Suppose this is a standard Backbone view
@@ -140,11 +144,12 @@ After a view container is registered, you can use its `makeView` function to gen
 		
 		var view = new MyView({
 			el: ContentViewContainer.makeView({
-				class: 'navbar navbar-default'
-			}, 'nav')
+				class: 'content awesome-stuff',
+				id: 'my-content'
+			}, 'div')
 		});
 		
-		// Do stuff and then
+		// Do stuff and then remove the view
 		view.remove();
 	...
 
@@ -171,8 +176,8 @@ The `makeView` function receives two arguments: the first is an object that will
 			// We create a view
 			this.view = new (app.require('MyView'))({
 					el: app.getViewContainer('MyViewContainer').makeView({
-					class: 'navbar navbar-default'
-				}, 'nav')
+					class: 'my-class'
+				}, 'span')
 			});
 		}
 
@@ -187,9 +192,43 @@ The `makeView` function receives two arguments: the first is an object that will
 		}
 	
 		NavigationController.prototype.onRouteChange = function(route) {
-			// Do something on route change
+			// Do something on route change. 
+			this.view.render();
 		}
 	
 		// We define the controller withing the app's context.
 		Sblork.getInstance('myapp').define('MyController', MyController);
 	})(this.Sblork, this.Backbone);
+	
+###Routing
+Backbone offers a nice routing facility. Sblork exposes its own `Router`, which is derived from Backbone's with some added sugar. Every Sblork app instance has a `Router` module already defined, and you can access it by using:
+
+	Sblork.getInstance('myapp').require('Router');
+	
+The `Router` allows you to define routes for your app (duh!) by specifying the name of the route, the path it refers to and the action that should be taken when the route is triggered:
+
+	Sblork.getInstance('myapp').require('Router').setRoutes({
+		'*actions': {
+			route: 'default',
+			action: function() {
+				// This is the most generic action, and is resolved with a function. Note that the context is the app, not the router!
+				
+				this.require('Router').navigate('stuff');
+			}
+		},
+		'stuff': {
+			route: 'stuff',
+			action: 'StuffController'
+		}
+	});
+	
+As you can see, a route can be resolved by either defining a callback or passing the name of a controller. In the first case, the callback will be called binded to the app's instance, so the `this` keyword will refer to the instance, not to the Router! In case you decide to resolve the action with a controller, its `start` method will be called. As soon as you navigate away from a controller-based route, the controller's `stop` method will be called to clean things up. 
+
+###That's it?
+For now, pretty much. As I said, this is in very early stages, I'll probably be adding more features in the future if I feel they are required. If you have suggestions, open an issue!
+
+##Demo
+*Work in progress*
+
+##Contributing
+Feel free to open issues, fork and issue pull requests for things that are broken or things you don't like. Thanks!
