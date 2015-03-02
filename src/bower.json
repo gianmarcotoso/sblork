@@ -6,6 +6,8 @@
 	],
 	"description": "Sblork",
 	"moduleType": [],
+	"main": "dist/sblork.min.js",
+	"ignore": [],
 	"keywords": [
 		"javascript",
 		"backbone",
