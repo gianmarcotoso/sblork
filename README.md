@@ -230,5 +230,8 @@ For now, pretty much. As I said, this is in very early stages, I'll probably be 
 ##Demo
 *Work in progress*
 
+##Tests
+*Work in progress*
+
 ##Contributing
 Feel free to open issues, fork and issue pull requests for things that are broken or things you don't like. Thanks!
