@@ -1,23 +1,27 @@
 {
-  "name": "Sblork",
-  "version": "0.0.1",
-  "description": "A Backbone MVC pattern skeleton, with abstraction for controllers and the router",
-  "main": "core.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "javascript",
-    "sblork",
-    "backbone",
-    "mvc"
-  ],
-  "author": "Gian Marco Toso",
-  "license": "MIT",
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-concat": "^0.5.1",
-    "grunt-contrib-uglify": "^0.8.0"
-  }
+	"name": "Sblork",
+	"version": "0.1.0",
+	"description": "A Backbone MVC pattern skeleton, with abstraction for controllers and the router",
+	"main": "src/core.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"javascript",
+		"sblork",
+		"backbone",
+		"mvc"
+	],
+	"repository" : { 
+		"type" : "git",
+	 	"url" : "http://github.com/gianmarcotoso/sblork.git"
+	},
+	"author": "Gian Marco Toso",
+	"license": "MIT",
+	"devDependencies": {
+		"grunt": "^0.4.5",
+		"grunt-contrib-clean": "^0.6.0",
+		"grunt-contrib-concat": "^0.5.1",
+		"grunt-contrib-uglify": "^0.8.0"
+	}
 }

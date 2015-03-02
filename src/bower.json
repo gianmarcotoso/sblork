@@ -1,28 +1,32 @@
 {
-  "name": "Sblork",
-  "version": "0.0.1",
-  "authors": [
-    "Gian Marco Toso <gianmarco.toso@gmail.com>"
-  ],
-  "description": "Sblork",
-  "moduleType": [],
-  "keywords": [
-    "javascript",
-    "backbone",
-    "mvc",
-    "sblork"
-  ],
-  "license": "MIT",
-  "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "backbone": "~1.1.2",
-    "jquery": "~2.1.3"
-  }
+	"name": "Sblork",
+	"version": "0.1.0",
+	"authors": [
+		"Gian Marco Toso <gianmarco.toso@gmail.com>"
+	],
+	"description": "Sblork",
+	"moduleType": [],
+	"keywords": [
+		"javascript",
+		"backbone",
+		"mvc",
+		"sblork"
+	],
+	"license": "MIT",
+	"private": false,
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/gianmarcotoso/sblork.git"
+	},
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests"
+	],
+	"dependencies": {
+		"backbone": "~1.1.2",
+		"jquery": "~2.1.3"
+	}
 }
