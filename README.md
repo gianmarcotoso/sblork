@@ -3,6 +3,23 @@ A simple MVC abstraction of [Backbone.js](http://backbonejs.org) with a silly na
 
 *Please note: this library is in a very, very, very early stage of development. I'm not sure about many things, stuff will change and there's probably something broken here and there. Please don't hate me! :)*
 
+##Installing
+You can install Sblork by using bower, with the usual
+	
+```
+	bower install sblork
+```
+
+You can now include it in your HTML along with its dependecies:
+
+```html
+	<script src="bower_components/underscore/underscore.js"></script>
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<script src="bower_components/backbone/backbone.js"></script>
+	
+	<script src="bower_components/sblork/dist/sblork.min.js"></script>
+```
+
 ##Building
 The repository already includes a built version of Sblork, but if you modify it you can build it like this:
 
