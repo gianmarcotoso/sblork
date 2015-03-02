@@ -1,7 +1,7 @@
 #Sblork
 A simple MVC abstraction of [Backbone.js](http://backbonejs.org) with a silly name (because Javascript libraries have silly names!)
 
-*Please note: this library is in a very, very, **very** early stage of development. I'm not sure about many things, stuff will change and there's probably something broken here and there. Please don't hate me! :)*
+*Please note: this library is in a very, very, very early stage of development. I'm not sure about many things, stuff will change and there's probably something broken here and there. Please don't hate me! :)*
 
 ##Building
 The repository already includes a built version of Sblork, but if you modify it you can build it like this:
@@ -19,6 +19,7 @@ Sblork focuses mainly on these things: `Bootstrapping`, `Views`, `Controllers` a
 ###Bootstrapping
 You bootstrap a Sblork application with a function that can be defined anywhere in your code. Usually you would have a main file with something like this inside:
 
+```javascript
 	;(function(Sblork, $, Backbone) {
 		// This function is called by Sblork binded to the app's instance
 		var bootstrap = function() {
@@ -30,7 +31,8 @@ You bootstrap a Sblork application with a function that can be defined anywhere 
 			var myapp = Sblork.start('myapp', bootstrap);
 		});
 	})(this.Sblork, this.jQuery, this.Backbone);
-	
+```
+
 So, what do we do inside the bootstrap function? There are a couple of things we can do:
 
 - Register **View Containers**
