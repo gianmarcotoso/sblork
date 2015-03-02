@@ -1,6 +1,6 @@
 {
 	"name": "Sblork",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "A Backbone MVC pattern skeleton, with abstraction for controllers and the router",
 	"main": "src/core.js",
 	"scripts": {
