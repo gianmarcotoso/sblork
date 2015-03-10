@@ -13,7 +13,7 @@
 
 			eventManager.trigger('RouteChange', route);
 
-			action.apply(controller ? controller : this);
+			action.apply(controller ? controller : this, Array.prototype.slice.call(arguments, 3));
 		}
 
 		Router.prototype.addRoute = function(path, route, action) {
@@ -37,7 +37,7 @@
 		Router.prototype.addAction = function(route, action) {
 			if (_.isFunction(action)) {
 				this.on('route:'+route, function() {
-					this.fireRoute.apply(instance, [route, null, action]);
+					this.fireRoute.apply(instance, _.union([route, null, action], arguments));
 				}, this);
 				return;
 			}
@@ -45,7 +45,7 @@
 			var controller = instance.getController(action);
 			if (controller) {
 				this.on('route:'+route, function() {
-					this.fireRoute.apply(instance, [route, controller, controller.start]);
+					this.fireRoute.apply(instance, _.union([route, controller, controller.start], arguments));
 				}, this);	
 				return;
 			}
