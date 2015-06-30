@@ -7,17 +7,17 @@ A simple MVC abstraction of [Backbone.js](http://backbonejs.org) with a silly na
 You can install Sblork by using bower, with the usual
 	
 ```
-	bower install sblork
+bower install sblork
 ```
 
 You can now include it in your HTML along with its dependecies:
 
 ```html
-	<script src="bower_components/underscore/underscore.js"></script>
-	<script src="bower_components/jquery/dist/jquery.js"></script>
-	<script src="bower_components/backbone/backbone.js"></script>
-	
-	<script src="bower_components/sblork/dist/sblork.min.js"></script>
+<script src="bower_components/underscore/underscore.js"></script>
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/backbone/backbone.js"></script>
+
+<script src="bower_components/sblork/dist/sblork.min.js"></script>
 ```
 
 ##Building
@@ -37,17 +37,17 @@ Sblork focuses mainly on these things: `Bootstrapping`, `Views`, `Controllers` a
 You bootstrap a Sblork application with a function that can be defined anywhere in your code. Usually you would have a main file with something like this inside:
 
 ```javascript
-	;(function(Sblork, $, Backbone) {
-		// This function is called by Sblork binded to the app's instance
-		var bootstrap = function() {
-			// Some bootstrap code here
-		}
-	
-		// When all resources are loaded, boot the application
-		$(function() {
-			var myapp = Sblork.start('myapp', bootstrap);
-		});
-	})(this.Sblork, this.jQuery, this.Backbone);
+(function(Sblork, $, Backbone) {
+	// This function is called by Sblork binded to the app's instance
+	var bootstrap = function() {
+		// Some bootstrap code here
+	}
+
+	// When all resources are loaded, boot the application
+	$(function() {
+		var myapp = Sblork.start('myapp', bootstrap);
+	});
+})(this.Sblork, this.jQuery, this.Backbone);
 ```
 
 So, what do we do inside the bootstrap function? There are a couple of things we can do:
@@ -61,40 +61,40 @@ So, what do we do inside the bootstrap function? There are a couple of things we
 Defining a module is a fancy way to say that you can save something within your app's namespace. For example, you can define a module like so:
 
 ```javascript
-	;(function(Sblork) {
-		// A constructor
-		var MyModule = function(name) {
-			this.name = name;
-		} 
+(function(Sblork) {
+	// A constructor
+	var MyModule = function(name) {
+		this.name = name;
+	} 
 
-		// An instance method
-		MyModule.prototype.awesome = function() {
-			alert(this.name + ' is awesome!');
-		}
+	// An instance method
+	MyModule.prototype.awesome = function() {
+		alert(this.name + ' is awesome!');
+	}
 
-		// The definition
-		Sblork.getInstance('myapp').define('MyModule', MyModule);
-	})(this.Sblork);
+	// The definition
+	Sblork.getInstance('myapp').define('MyModule', MyModule);
+})(this.Sblork);
 ```
 
 Later, for example in your bootstrap function, you could use that module this way: 
 
 ```javascript
-	;(function(Sblork, $, Backbone) {
-		// This function is called by Sblork binded to the app's instance
-		var bootstrap = function() {
-			// We bootstrap by using the module we defined earlier!
-			var MyModule = Sblork.getInstance('myapp').require('MyModule');
-			var myModuleInstance = new MyModule('Jimmy');
+(function(Sblork, $, Backbone) {
+	// This function is called by Sblork binded to the app's instance
+	var bootstrap = function() {
+		// We bootstrap by using the module we defined earlier!
+		var MyModule = Sblork.getInstance('myapp').require('MyModule');
+		var myModuleInstance = new MyModule('Jimmy');
 
-			myModuleInstance.awesome();
-		}
+		myModuleInstance.awesome();
+	}
 
-		// When all resources are loaded, boot the application
-		$(function() {
-			var myapp = Sblork.start('myapp', bootstrap);
-		});
-	})(this.Sblork, this.jQuery, this.Backbone);
+	// When all resources are loaded, boot the application
+	$(function() {
+		var myapp = Sblork.start('myapp', bootstrap);
+	});
+})(this.Sblork, this.jQuery, this.Backbone);
 ```
 
 Modules are used to represent controllers, views, the router, the event manager and whatever else you want to. There is no restriction, they can be used for anything!
@@ -103,7 +103,7 @@ Modules are used to represent controllers, views, the router, the event manager 
 Every Sblork app instance has a predefined module called `EventManager`. This is an object extending `Backbone.Event`, with no added functionality whatsoever. You can retrieve it anywhere by using
 
 ```javascript
-	var eventManager = Sblork.getInstance('myapp').require('EventManager');
+var eventManager = Sblork.getInstance('myapp').require('EventManager');
 ```
 
 You can then send events through it or listen to events coming from it at your leisure.
@@ -112,25 +112,25 @@ You can then send events through it or listen to events coming from it at your l
 A view can be defined as a module within the Sblork app's namespace. If you use Backbone's `View`, this could be how you define it:
 
 ```javascript
-	;(function(Sblork, Backbone) {
-		var MyView = Backbone.View.extend({
-			initialize: function() {
-				this.eventManager = Sblork.getInstance('myapp').require('EventManager');
+(function(Sblork, Backbone) {
+	var MyView = Backbone.View.extend({
+		initialize: function() {
+			this.eventManager = Sblork.getInstance('myapp').require('EventManager');
 
-				this.render();
-			},
-			render: function() {
-				this.eventManager.trigger('MyView:BeforeRender', this);
+			this.render();
+		},
+		render: function() {
+			this.eventManager.trigger('MyView:BeforeRender', this);
 
-				var html = '<p>I am a view!</p>';
-				this.$el.html(html);		
+			var html = '<p>I am a view!</p>';
+			this.$el.html(html);		
 
-				this.eventManager.trigger('MyView:AfterRender', this);
-			}
-		});
+			this.eventManager.trigger('MyView:AfterRender', this);
+		}
+	});
 
-		Sblork.getInstance('myapp').define('MyView', MyView);
-	})(this.Sblork, this.Backbone);
+	Sblork.getInstance('myapp').define('MyView', MyView);
+})(this.Sblork, this.Backbone);
 ```
 
 ###View Containers
@@ -139,51 +139,53 @@ A view can be present inside the DOM for a certain amount of time. This time can
 Let's say you have a structure like this one:
 
 ```html
-	<html>	
-		...
-		<body>
-			<div data-container-role="navigation"></div>
-			<div data-container-role="content"></div>
-		</body>
-	</html>
+<html>	
+	...
+	<body>
+		<div data-container-role="navigation" data-container-name="NavigationViewContainer"></div>
+		<div data-container-role="content" data-container-name="ContentViewContainer"></div>
+		<div data-container-role="footer"></div>
+	</body>
+</html>
 ```
 
-Here, the `div` with the role `navigation` is used as a container for the nav bar while the one with the role `content` is used to show the current page's content. You can register the two `div`s as containers within Sblork by calling the `registerViewContainer` method and passing it a name for the container and the `data-container-role` value for the element you want to use as the container itself:
+Here, the `div` with the role `navigation` is used as a container for the nav bar while the one with the role `content` is used to show the current page's content. There is also an unnamed container with the role `footer`, that will be used to display the footer.
+
+Sblork will automatically register all view containers that have the `data-container-name` property set to something. You can also manually register any `div` as a container within Sblork by calling the `registerViewContainer` method and passing it a name for the container and the `data-container-role` value for the element you want to use as the container itself:
 
 ```javascript
-	;(function(Sblork, $, Backbone) {
-		// This function is called by Sblork binded to the app's instance
-		var bootstrap = function() {
-			// Register the view containers
-			this.registerViewContainer('ContentViewContainer', 'content');
-			this.registerViewContainer('NavigationViewContainer', 'navigation');
-		}
+(function(Sblork, $, Backbone) {
+	// This function is called by Sblork binded to the app's instance
+	var bootstrap = function() {
+		// Register the unnamed view containers
+		this.registerViewContainer('FooterViewContainer', 'footer');
+	}
 
-		// When all resources are loaded, boot the application
-		$(function() {
-			var myapp = Sblork.start('myapp', bootstrap);
-		});
-	})(this.Sblork, this.jQuery, this.Backbone);
+	// When all resources are loaded, boot the application
+	$(function() {
+		var myapp = Sblork.start('myapp', bootstrap);
+	});
+})(this.Sblork, this.jQuery, this.Backbone);
 ```
 
-After a view container is registered, you can use its `makeView` function to generete the DOM element that will be used to render your view (and that will get deleted from the DOM on cleanup, while the container will live on):
+After a view container is registered, you can use its `makeView` function to generate the DOM element that will be used to render your view (and that will get deleted from the DOM on cleanup, while the container will live on):
 
 ```javascript
-	...
-		// Suppose this is a standard Backbone view
-		var MyView = Sblork.getInstance('myapp').require('MyView');
-		var ContentViewContainer = Sblork.getInstance('myapp').getViewContainer('ContentViewContainer');
-		
-		var view = new MyView({
-			el: ContentViewContainer.makeView({
-				class: 'content awesome-stuff',
-				id: 'my-content'
-			}, 'div')
-		});
-		
-		// Do stuff and then remove the view
-		view.remove();
-	...
+...
+	// Suppose this is a standard Backbone view
+	var MyView = Sblork.getInstance('myapp').require('MyView');
+	var ContentViewContainer = Sblork.getInstance('myapp').getViewContainer('ContentViewContainer');
+	
+	var view = new MyView({
+		el: ContentViewContainer.makeView({
+			class: 'content awesome-stuff',
+			id: 'my-content'
+		}, 'div')
+	});
+	
+	// Do stuff and then remove the view
+	view.remove();
+...
 ```
 
 The `makeView` function receives two arguments: the first is an object that will be passed to the jQuery `.attr` function on the generated view element, while the second is the tag to be used to generate such element. If the second argument is not specified, `div` will be used as a default value.
@@ -192,73 +194,73 @@ The `makeView` function receives two arguments: the first is an object that will
 `Controllers` are objects that must have a constructor and two functions: `start` and `stop`. You should define controllers as modules, like this:
 
 ```javascript
-	;(function(Sblork, Backbone) {		
-		var MyController = function() {
-			console.log('My Controller initialized');
+(function(Sblork, Backbone) {		
+	var MyController = function() {
+		console.log('My Controller initialized');
 
-			// We fetch the event manager and set it as a property of the controller
-			this.eventManager = Sblork.getInstance('myapp').require('EventManager');
-		}
+		// We fetch the event manager and set it as a property of the controller
+		this.eventManager = Sblork.getInstance('myapp').require('EventManager');
+	}
 
-		MyController.prototype.start = function() {
-			console.log('My Controller started');
-			var app = Sblork.getInstance('myapp');
+	MyController.prototype.start = function() {
+		console.log('My Controller started');
+		var app = Sblork.getInstance('myapp');
 
-			// We can respond to events fired by the event manager. Setting the context to the controller itself (third parameter) is VERY important for cleanup purposes
-			this.eventManager.on('RouteChange', this.onRouteChange, this);
+		// We can respond to events fired by the event manager. Setting the context to the controller itself (third parameter) is VERY important for cleanup purposes
+		this.eventManager.on('RouteChange', this.onRouteChange, this);
 
-			// We create a view
-			this.view = new (app.require('MyView'))({
-					el: app.getViewContainer('MyViewContainer').makeView({
-					class: 'my-class'
-				}, 'span')
-			});
-		}
+		// We create a view
+		this.view = new (app.require('MyView'))({
+				el: app.getViewContainer('MyViewContainer').makeView({
+				class: 'my-class'
+			}, 'span')
+		});
+	}
 
-		MyController.prototype.stop = function() {
-			console.log('My Controller stopped');
+	MyController.prototype.stop = function() {
+		console.log('My Controller stopped');
+	
+		// We remove all event listeners associated to this controller
+		this.eventManager.off(null, null, this);
 		
-			// We remove all event listeners associated to this controller
-			this.eventManager.off(null, null, this);
-			
-			// We remove the view since the controller is not active anymore
-			this.view.remove();
-		}
-	
-		NavigationController.prototype.onRouteChange = function(route) {
-			// Do something on route change. 
-			this.view.render();
-		}
-	
-		// We define the controller withing the app's context.
-		Sblork.getInstance('myapp').define('MyController', MyController);
-	})(this.Sblork, this.Backbone);
+		// We remove the view since the controller is not active anymore
+		this.view.remove();
+	}
+
+	NavigationController.prototype.onRouteChange = function(route) {
+		// Do something on route change. 
+		this.view.render();
+	}
+
+	// We define the controller within the app's context.
+	Sblork.getInstance('myapp').controller('MyController', MyController);
+})(this.Sblork, this.Backbone);
 ```
 
 ###Routing
 Backbone offers a nice routing facility. Sblork exposes its own `Router`, which is derived from Backbone's with some added sugar. Every Sblork app instance has a `Router` module already defined, and you can access it by using:
 
 ```javascript
-	Sblork.getInstance('myapp').require('Router');
+Sblork.getInstance('myapp').require('Router');
 ```
 	
 The `Router` allows you to define routes for your app (duh!) by specifying the name of the route, the path it refers to and the action that should be taken when the route is triggered:
 
 ```javascript
-	Sblork.getInstance('myapp').require('Router').setRoutes({
-		'*actions': {
-			route: 'default',
-			action: function() {
-				// This is the most generic action, and is resolved with a function. Note that the context is the app, not the router!
-				
-				this.require('Router').navigate('stuff');
-			}
-		},
-		'stuff': {
-			route: 'stuff',
-			action: 'StuffController'
+Sblork.getInstance('myapp').require('Router').setRoutes({
+	'*actions': {
+		route: 'default',
+		action: function() {
+			// This is the most generic action, and is resolved with a function. Note that the context is the app, not the router!
+			
+			this.require('Router').navigate('stuff');
 		}
-	});
+	},
+	'stuff': {
+		route: 'stuff',
+		action: 'StuffController'
+	}
+});
 ```	
 	
 As you can see, a route can be resolved by either defining a callback or passing the name of a controller. In the first case, the callback will be called binded to the app's instance, so the `this` keyword will refer to the instance, not to the Router! In case you decide to resolve the action with a controller, its `start` method will be called. As soon as you navigate away from a controller-based route, the controller's `stop` method will be called to clean things up. 

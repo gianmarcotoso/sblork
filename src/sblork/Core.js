@@ -12,6 +12,14 @@
 			return null;
 
 		var sblork = Sblork._instances[instanceName];
+
+		$('[data-container-name]').each(function(index, el) {
+			var role = $(el).attr('data-container-role');
+			var name = $(el).attr('data-container-name');
+
+			sblork.registerViewContainer(name, role);
+		});
+
 		sblork.bootstrap(boot);
 
 		return sblork;
@@ -95,6 +103,12 @@
 			throw "The module " + moduleName + " is not defined on instance " + this.name;
 
 		return this._modules[moduleName];
+	} 
+
+	Sblork.prototype.controller = function(controllerName, implementation) {
+		this.define(controllerName, implementation);
+
+		this.registerController(controllerName, this.require(controllerName));
 	} 
 	
 	// Export the Sblork object to the global namespace
